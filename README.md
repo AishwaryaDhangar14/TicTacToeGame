@@ -20,6 +20,3 @@ This project demonstrates the use of the MVC pattern in ASP.NET, handling game l
 - **IDE:** Visual Studio / Visual Studio Code
 - **Language:** C#
 
----
-
-## 📂 Project Structure
