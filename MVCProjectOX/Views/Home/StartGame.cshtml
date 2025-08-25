@@ -1,0 +1,224 @@
+﻿@{
+    ViewBag.Title = "StartGame";
+}
+<style>
+    tr {
+        width: 200px;
+    }
+
+    .margin {
+        margin-left: 100px;
+    }
+    .btno {
+        height: 120px;
+        width: 120px;
+        font-size: 70px;
+    }
+
+   
+</style>
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(function () {
+
+        var flag1 = 1;
+        var flag2 = 0;
+        var XPoints = 0;
+        var OPoints = 0;
+        var html;
+        var roundno = 0;
+
+
+        $(".btno").click(function ()
+        {
+
+            var bid = $(this).attr('id');
+
+            var btnval = $("#" + bid + "").text();
+
+            if (btnval == ' ') {
+
+                flag2++;
+
+                if (flag1 == 1) {
+                    $("#" + bid + "").text('X');
+                    flag1 = 0;
+                }
+                else {
+                    $("#" + bid + "").text('O');
+                    flag1 = 1;
+                }
+            }
+
+            $(".btno").mouseleave(function () {
+
+
+                var clickedbtn = $(this).attr("id");
+
+                if ($("#btn1").text() == $("#btn2").text() && $("#btn2").text() == $("#btn3").text() && $("#btn1").text() != " "
+                    || $("#btn1").text() == $("#btn4").text() && $("#btn4").text() == $("#btn7").text() && $("#btn1").text() != " "
+                    || $("#btn1").text() == $("#btn5").text() && $("#btn5").text() == $("#btn9").text() && $("#btn1").text() != " "
+                    || $("#btn2").text() == $("#btn5").text() && $("#btn5").text() == $("#btn8").text() && $("#btn2").text() != " "
+                    || $("#btn3").text() == $("#btn6").text() && $("#btn6").text() == $("#btn9").text() && $("#btn3").text() != " "
+                    || $("#btn3").text() == $("#btn5").text() && $("#btn5").text() == $("#btn7").text() && $("#btn3").text() != " "
+                    || $("#btn4").text() == $("#btn5").text() && $("#btn5").text() == $("#btn6").text() && $("#btn4").text() != " "
+                    || $("#btn7").text() == $("#btn8").text() && $("#btn8").text() == $("#btn9").text() && $("#btn7").text() != " ") {
+
+                    alert("Game Over..!! " + $("#" + clickedbtn).text() + " is winner ");
+                    roundno++;
+
+                    if ($("#" + clickedbtn).text() == "X") {
+                        XPoints++;
+
+                        $('tr').remove(".totaltr");
+
+                        html = "<tr class='border'><th class='border' style='padding:7px'>Round " + roundno + "</th ><th class='border' style='padding:7px'>1</th><th class='border' style='padding:7px'>0</th></tr><tr class='border totaltr'><th class='border' style='padding:7px'>Total</th><th class='border' style='padding:7px'>" + XPoints + "</th><th class='border' style='padding:7px'>" + OPoints + "</th ></tr >";
+                        $("#dashboard").append(html);
+
+                    }
+
+                    else if ($("#" + clickedbtn).text() == "O") {
+                        OPoints++;
+
+                        $('tr').remove(".totaltr");
+
+                        html = "<tr class='border'><th class='border' style='padding:7px'>Round " + roundno + "</th ><th class='border' style='padding:7px'>0</th><th class='border' style='padding:7px'>1</th></tr><tr class='border totaltr'><th class='border' style='padding:7px'>Total</th><th class='border' style='padding:7px'>" + XPoints + "</th><th class='border' style='padding:7px'>" + OPoints + "</th ></tr >";
+                        $("#dashboard").append(html);
+                    }
+
+
+                    for (i = 1; i <= 9; i++) {
+
+                        $("#btn" + i).text(" ");
+                    }
+                    flag2 = 0;
+                    
+                }
+
+                if (flag2 == 9) {
+                    alert("Game Tie..!! Try Again ");
+                    roundno++;
+                    for (i = 1; i <= 9; i++) {
+
+                        $("#btn" + i).text(" ");
+                    }
+                    flag2 = 0;
+
+
+                    $('tr').remove(".totaltr");
+
+
+                    html = "<tr class='border'><th class='border' style='padding:7px'>Round " + roundno + "</th ><th class='border' style='padding:7px'>0</th><th class='border' style='padding:7px'>0</th></tr><tr class='border totaltr'><th class='border' style='padding:7px'>Total</th><th class='border' style='padding:7px'>" + XPoints + "</th><th class='border' style='padding:7px'>" + OPoints + "</th ></tr >";
+                    $("#dashboard").append(html);
+                    
+                }  
+            });
+        });
+
+
+
+        $("#endbtn").click(function () {
+
+            if (roundno == 0) {
+                alert("Series Ended....You Did Not Play The Game...No One Is Winner..Try Again To Get Winner  : )")
+            }
+            else { 
+            if (XPoints == OPoints) {
+                alert("Series Ended....Tie, No One Is Winner..Try Again  :(");
+            }
+            else if (XPoints > OPoints) {
+                alert("Series Ended...  X Is Winner Of The Series  : )");
+            }
+            else {
+                alert("Series Ended......O Is Winner Of The Series   : )");
+
+                }
+            }
+        });
+
+    });
+</script>
+
+<br />
+<br />
+<div class="container p-5 bg-dark text-white d-flex">
+
+    <table class="d-inline-block margin" style="text-align:center" id="dashboard">
+        <tr class="border">
+            <th colspan="3" style="padding:7px">Dashboard</th>
+        </tr>
+        <tr class="border">
+            <th class="border" style="padding:7px">Round No</th>
+            <th class="border" style="padding:7px">X Points</th>
+            <th class="border" style="padding:7px">O Points</th>
+        </tr>
+
+    </table>
+
+    <table class="d-inline-block col-4">
+        <tr>
+            <td>
+                <div class="col row-cols-xl-3 margin border">
+                    <button id="btn1" type="button" class="btn btn-dark btno"> </button>
+                </div>
+            </td>
+            <td>
+                <div class="col row-cols-xl-3 border" >
+                    <button id="btn2" type="button" class="btn btn-dark btno"> </button>
+                </div>
+            </td>
+            <td>
+                <div class="col row-cols-xl-3 border">
+                    <button id="btn3" type="button" class="btn btn-dark btno"> </button>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="col row-cols-xl-3 margin border">
+                    <button id="btn4" type="button" class="btn btn-dark btno"> </button>
+                </div>
+            </td>
+            <td>
+                <div class="col row-cols-xl-3 border">
+                    <button id="btn5" type="button" class="btn btn-dark btno"> </button>
+                </div>
+            </td>
+            <td>
+                <div class="col row-cols-xl-3 border">
+                    <button id="btn6" type="button" class="btn btn-dark btno"> </button>
+                </div>            
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="col row-cols-xl-3 margin border">
+                    <button id="btn7" type="button" class="btn btn-dark btno"> </button>
+                </div>
+            </td>
+            <td>
+                <div class="col row-cols-xl-3 border">
+                    <button id="btn8" type="button" class="btn btn-dark btno"> </button>
+                </div>
+            </td>
+            <td>
+                <div class="col row-cols-xl-3 border">
+                    <button id="btn9" type="button" class="btn btn-dark btno"> </button>
+                </div>           
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center" colspan="3">
+                <div class=" margin" style="padding-top:40px">
+                    <button class="col-6 btn btn-light" type="button" id="endbtn"  style="font-size:20px;padding:7px;padding-left:10px;border:5px solid yellow">
+                        @Html.ActionLink("End The Game", "Index", "Home", new { area = "" }, new { @class = "nav-link" })
+                    </button>
+                </div>
+
+            </td>
+        </tr>
+    </table>
+</div>
+
